@@ -1,5 +1,3 @@
-import React from "react";
-
 const CharacterList = ({ characters }) => {
   return (
     <div className="container">

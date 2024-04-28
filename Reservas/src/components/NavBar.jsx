@@ -1,4 +1,4 @@
-import React from 'react'
+
 import '../css/main.css'
 import { Outlet, Link } from 'react-router-dom'
 import logo from '../img/logo.png'
@@ -20,7 +20,7 @@ const NavBar = () => {
                         <li><Link to="Canchas">Canchas</Link></li>
                         <li><Link to="Reservar">Reservar</Link></li>
                         <li><Link to="Nosotros">Nosotros</Link></li>
-                        <li><Link to="API">Rick & Morty</Link></li>
+                        <li><Link to="InicioSesion">Iniciar Sesión</Link></li>
                         </ul>
                     </div>
                 </div>

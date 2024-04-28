@@ -1,4 +1,4 @@
-import React from 'react'
+
 import nosotros from '../img/pintballNosotros.jpg'
 import { Link } from 'react-router-dom'
 

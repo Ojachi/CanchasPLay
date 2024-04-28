@@ -1,5 +1,6 @@
-import React from 'react';
 
+
+// eslint-disable-next-line react/prop-types
 const CustomTimePicker = ({ value, onChange }) => {
   return (
     <select value={value} onChange={(e) => onChange(e.target.value)}>

@@ -5,7 +5,8 @@ import Reservar from './components/Reservar'
 import Nosotros from './components/Nosotros'
 import { Routes, Route } from 'react-router-dom'
 import 'font-awesome/css/font-awesome.min.css'
-import API from './components/API'
+import SignUp from './components/SignUp'
+import InicioSesion from './components/InicioSesion'
 
 function App() {
 
@@ -17,7 +18,8 @@ function App() {
           <Route path='Canchas' element={<Canchas/>}/>
           <Route path='Reservar' element={<Reservar/>}/>
           <Route path='Nosotros' element={<Nosotros/>}/>
-          <Route path='API' element={<API/>}/>
+          <Route path='InicioSesion' element={<InicioSesion/>}/>
+          <Route path='SignUp' element={<SignUp/>}/>
         </Route>
       </Routes>
     

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../css/main.css';
 import { Link } from 'react-router-dom';
 import futbol1 from '../img/futbol1.jpg';
@@ -72,7 +72,7 @@ const Canchas = () => {
       <Carrousel images={[voleibol1, voleibol2, voleibol3]} />
       <div style={{ margin: '10px 0' }}></div>
       <h1 className='textoCan2_1'>Paintball</h1>
-      <h3 className='textoCan2'> Reúne a tu equipo, elabora estrategias y sumérgete en una batalla llena de adrenalina. ¡Reserva tu experiencia hoy!</h3>
+      <h3 className='textoCan2'> Reúne a tu equipo, elabora estrategias y sumérgete en una batalla llena de adrenalina. ¡Reserva tu experiencia hoy!</h3>
       <Carrousel images={[paintball1, paintball2, paintball3]} />
     </div>
   );
