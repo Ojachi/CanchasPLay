@@ -15,21 +15,21 @@ dotenv.config();
 conectarDB();
 
 //COnfiguracion cors
-const whitelist = ["http://localhost:5173"];
+// const whitelist = ["http://localhost:5173"];
 
-const corsOption = {
-  origin: function (origin, callback) {
-    if (whitelist.includes(origin)) {
-      //puede consultar la API
-      callback(null, true);
-    } else {
-      //no puede consultar la API
-      callback(new Error("Error de cors"));
-    }
-  },
-};
+// const corsOption = {
+//   origin: function (origin, callback) {
+//     if (whitelist.includes(origin)) {
+//       //puede consultar la API
+//       callback(null, true);
+//     } else {
+//       //no puede consultar la API
+//       callback(new Error("Error de cors"));
+//     }
+//   },
+// };
 
-app.use(cors(corsOption));
+// app.use(cors(corsOption));
 
 //routing
 app.use("/api/usuarios", usuarioRoutes);

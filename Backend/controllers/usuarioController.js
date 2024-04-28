@@ -125,8 +125,33 @@ const perfil = (req, res) => {
 };
 
 
-//actualizar el usuario
+//actualizar el usuario //hay que adaptarlo
+const actualizar = async (req, res) => {
+    const { email } = req.params;
+    const usuario = await Usuario.findById(email);
+
+    console.log(usuario);
+
+    if (!usuario) {
+        const error = new Error("No encontrado");
+        return res.status(404).json({msg: "Accion no valida"});
+    };
+    if (usuario.cliente.toString() !== req.usuario.email.toString()) {
+        const error = new Error("Accion no valida");
+        return res.status(404).json({msg: error.message});   
+    };
+
+    usuario.password = req.body.password || usuario.password;
+    usuario.email = req.body.email || usuario.email;
+
+    try {
+        const usuarioAlmacenado = await Usuario.save();
+        res.json(usuarioAlmacenado);
+        res.json({msg: "Usuario actualizado correctamente"});
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 
-
-export { registrar, autenticar, confirmar, olvidePassword, comprobarToken, nuevoPassword, perfil };
+export { registrar, autenticar, confirmar, olvidePassword, comprobarToken, nuevoPassword, perfil, actualizar };

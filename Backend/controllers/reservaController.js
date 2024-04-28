@@ -13,7 +13,7 @@ const registrar = async (req, res) => {
     const reserva = new Reserva(req.body);
         reserva.cliente = req.usuario._id;
     try {
-        const reservaAlmacenada = await reserva.save();
+        const reservaAlmacenada = await Reserva.save();
         res.json(reservaAlmacenada);
     } catch (error) {
         console.log(error);
@@ -63,6 +63,7 @@ const actualizar = async (req, res) => {
     try {
         const reservaAlmacenada = await Reserva.save();
         res.json(reservaAlmacenada);
+        res.json({msg: "reserva actualizada correctamente"});
     } catch (error) {
         console.log(error);
     }
