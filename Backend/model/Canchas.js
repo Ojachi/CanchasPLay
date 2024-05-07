@@ -19,5 +19,5 @@ const canchaSchema = mongoose.Schema(
         _id: { auto: true }
     }
 );
-const canchas = mongoose.model("Canchas", canchaSchema);
-export default canchas;
+const Canchas = mongoose.model("Canchas", canchaSchema);
+export default Canchas;

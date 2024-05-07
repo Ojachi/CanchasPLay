@@ -16,7 +16,7 @@ const reservaSchema = mongoose.Schema(
         cliente: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Usuario",
-            //required: true,
+            
         },
         cancha: {
             type: mongoose.Schema.Types.ObjectId,

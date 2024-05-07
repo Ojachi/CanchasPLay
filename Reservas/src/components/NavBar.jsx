@@ -3,7 +3,13 @@ import '../css/main.css'
 import { Outlet, Link } from 'react-router-dom'
 import logo from '../img/logo.png'
 
-
+function login(){
+    if (usuario == ''){
+        return (<li><Link to="InicioSesion"><i className='fas fa-lock'></i></Link></li>)
+    }else {
+        return (<li><Link to="Perfil"><i className='fas fa-user'></i></Link></li>)
+    }
+}
 
 const NavBar = () => {
   return (
@@ -16,11 +22,11 @@ const NavBar = () => {
                     </div>
                     <div className="top-bar-right">
                         <ul className="menu">
-                        <li><Link to="Inicio">Inicio</Link></li>
+                        <li><Link to="/">Inicio</Link></li>
                         <li><Link to="Canchas">Canchas</Link></li>
                         <li><Link to="Reservar">Reservar</Link></li>
                         <li><Link to="Nosotros">Nosotros</Link></li>
-                        <li><Link to="InicioSesion">Iniciar Sesión</Link></li>
+                        <li><Link to="InicioSesion"><i className='fas fa-lock'></i></Link></li>
                         </ul>
                     </div>
                 </div>
@@ -52,7 +58,7 @@ const NavBar = () => {
                         <p>+57 (318) 388-6495</p>
                     </div>
                     <div className="marketing-site-footer-block">
-                        <i className="fa fa-envelope-o" aria-hidden="true"></i>
+                        <i className="fa fa-envelope" aria-hidden="true"></i>
                         <p>CanchaPlay@gmail.com</p>
                     </div>
                 </div>
