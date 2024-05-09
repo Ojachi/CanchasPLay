@@ -28,10 +28,7 @@ const usuarioSchema = mongoose.Schema(
             type: Boolean,
             default: false
         },
-        confirmado: {
-            type: Boolean,
-            default: false,
-        },
+        
     },
     {
         timestamps:true,

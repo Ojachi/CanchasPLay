@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
-import Alerta from "./Alerta";
+import Alerta from "../components/Alerta";
+import { SessionContext } from "../components/Session";
 
 function InicioSesion() {
+  const { setSession } = useContext(SessionContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -30,12 +32,31 @@ function InicioSesion() {
       );
       setAlerta({
         msg: data.msg,
-        error: false,
+        error: true,
       });
+      const session = {
+        id: data._id,
+        nombre: data.nombre,
+        email: data.email,
+        esAdmin: data.esAdmin,
+      };
+      setSession(session);
+
+      if (session.esAdmin == true) {
+        setTimeout(() => {
+          window.location.href = "Dashboard";
+        }, 1000);
+      }else {
+        setTimeout(() => {
+          window.location.href = "Reservas";
+        }, 1000);
+      }
+
+      console.log(session.esAdmin);
     } catch (error) {
       setAlerta({
         msg: error.response.data.msg,
-        error: true,
+        error: false,
       });
     }
   };

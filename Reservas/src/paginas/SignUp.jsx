@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import Alerta from "../components/Alerta";
 import { Link } from "react-router-dom";
+import { SessionContext } from "../components/Session";
 
 function SignUp() {
   const [nombre, setNombre] = useState("");
@@ -10,6 +11,7 @@ function SignUp() {
   const [repetirPassword, setRepetirPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [alerta, setAlerta] = useState({});
+  const { setSession } = useContext(SessionContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,6 +54,13 @@ function SignUp() {
         msg: data.msg,
         error: false,
       });
+      const session = {
+        id: data._id,
+        nombre: data.nombre,
+        email: data.email,
+        esAdmin: data.esAdmin,
+      };
+      setSession(session);
 
       setTimeout(() => {
         window.location.href = "/";
@@ -137,11 +146,6 @@ function SignUp() {
           </div>
         </form>
         <div id="btnContenedorSign">
-          <Link
-            to="/olvide-password"
-          >
-            Olvide Mi Password
-          </Link>
           <Link
             id="yTC"
             to="/InicioSesion"

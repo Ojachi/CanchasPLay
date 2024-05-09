@@ -1,15 +1,13 @@
 import NavBar from "./components/NavBar";
-import Inicio from "./components/Inicio";
-import Canchas from "./components/Canchas";
-import Reservar from "./components/Reservar";
-import Nosotros from "./components/Nosotros";
+import Inicio from "./paginas/Inicio";
+import Canchas from "./paginas/Canchas";
+import Reservar from "./paginas/Reservar";
+import Nosotros from "./paginas/Nosotros";
 import { Routes, Route } from "react-router-dom";
 import "font-awesome/css/font-awesome.min.css";
-import SignUp from "./components/SignUp";
-import InicioSesion from "./components/InicioSesion";
-import OlvidePassword from "./components/OlvidePassword";
-import NuevoPassword from "./components/NuevoPassword";
-import ConfirmarCuenta from "./components/ConfirmarCuenta";
+import SignUp from "./paginas/SignUp";
+import InicioSesion from "./paginas/InicioSesion";
+import Dashboard from "./paginas/Dashboard";
 
 function App() {
   return (
@@ -21,9 +19,7 @@ function App() {
         <Route path="Nosotros" element={<Nosotros />} />
         <Route path="InicioSesion" element={<InicioSesion />} />
         <Route path="SignUp" element={<SignUp />} />
-        <Route path="olvide-password" element={<OlvidePassword />} />
-        <Route path="olvide-password/:token" element={<NuevoPassword />} />
-        <Route path="confirmar/:id" element={<ConfirmarCuenta />} />
+        <Route path="Dashboard" element={<Dashboard />} />
       </Route>
     </Routes>
   );
