@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import axios from "axios";
 import Alerta from "../components/Alerta";
@@ -8,6 +8,7 @@ function InicioSesion() {
   const { setSession } = useContext(SessionContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const [alerta, setAlerta] = useState({});
 
@@ -24,16 +25,18 @@ function InicioSesion() {
 
     setAlerta({});
 
-    // Iniciar sesion del usuario en la API
+    // Iniciar sesión del usuario en la API
     try {
       const { data } = await axios.post(
         "http://localhost:4000/api/usuarios/login",
         { email, password }
       );
+
       setAlerta({
         msg: data.msg,
-        error: true,
+        error: false,
       });
+
       const session = {
         id: data._id,
         nombre: data.nombre,
@@ -42,21 +45,19 @@ function InicioSesion() {
       };
       setSession(session);
 
-      if (session.esAdmin == true) {
-        setTimeout(() => {
-          window.location.href = "Dashboard";
-        }, 1000);
-      }else {
-        setTimeout(() => {
-          window.location.href = "Reservas";
-        }, 1000);
-      }
+      // Redirección basada en si el usuario es administrador o no
+      setTimeout(() => {
+        if (session.esAdmin) {
+          navigate("/dashboard"); // Ruta del dashboard del administrador
+        } else {
+          navigate("/reservas"); // Ruta para usuarios generales
+        }
+      }, 1000); // 1 segundo de espera antes de redirigir
 
-      console.log(session.esAdmin);
     } catch (error) {
       setAlerta({
-        msg: error.response.data.msg,
-        error: false,
+        msg: error.response?.data?.msg || "Error al iniciar sesión",
+        error: true,
       });
     }
   };
@@ -90,7 +91,7 @@ function InicioSesion() {
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-        ></input>
+        />
         <button
           type="button"
           className="password-toggle"
@@ -101,7 +102,7 @@ function InicioSesion() {
       </div>
       <div className="btncont">
         <button type="submit" className="submit primary button" id="LoginBtn">
-          Iniciar Sesion
+          Iniciar Sesión
         </button>
       </div>
       <div className="btnContenedor">
@@ -113,4 +114,5 @@ function InicioSesion() {
     </form>
   );
 }
+
 export default InicioSesion;

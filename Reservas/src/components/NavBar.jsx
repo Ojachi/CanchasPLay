@@ -5,8 +5,7 @@ import { useContext } from "react";
 import { SessionContext } from "../components/Session";
 
 const NavBar = () => {
-  const { session } = useContext(SessionContext);
-
+  const { session, setSession } = useContext(SessionContext);
   const login = () => {
     if (!session || Object.keys(session).length === 0) {
       return (
@@ -16,9 +15,16 @@ const NavBar = () => {
       );
     } else {
       return (
-        <Link to="Perfil">
-          <i className="fas fa-user" />
-        </Link>
+        <div className="dropdown">
+          <button className="dropbtn">
+            <i className="fas fa-user" />
+          </button>
+          <div className="dropdown-content">
+            <Link to="#" onClick={() => setSession({})}>
+              Log out
+            </Link>
+          </div>
+        </div>
       );
     }
   };
