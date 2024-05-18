@@ -1,6 +1,6 @@
 import  express  from "express";
 
-import { registrar, autenticar ,perfil, actualizar, acciones,} from "../controllers/usuarioController.js"
+import { registrar, autenticar ,perfil, actualizar, } from "../controllers/usuarioController.js"
 
 //import checkAuth from "../middleware/checkAuth.js";
 

@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState, useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datetime/css/react-datetime.css';
@@ -7,6 +7,8 @@ import Modal from 'react-modal';
 import moment from 'moment';
 import CustomTimePicker from '../components/selectFecha';
 import CustomTimePicker2 from '../components/selectHoraFin';
+import axios from 'axios';
+import { SessionContext } from "../components/Session";
 
 const customModalStyles = {
   content: {
@@ -26,19 +28,18 @@ const customModalStyles = {
 Modal.setAppElement('#root');
 
 const Reservar = () => {
+  const { session } = useContext(SessionContext);
   const [selectedDate, setSelectedDate] = useState(null);
   const [time, setTime] = useState('none'); 
   const [tipoVisible, setTipoVisible] = useState(false);
   const [Hora1Visible, setHora1Visible] = useState(false); 
   const [Hora2Visible, setHora2Visible] = useState(false);
-  const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
   const [deporte, setDeporte] = useState('any');
   const [tipo, setTipo] = useState('none');
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
   const [reservaExitosa, setReservaExitosa] = useState(false);
-  const [errorMensaje, setErrorMensaje] = useState('');
-  const [reservas, setReservas] = useState([]);
 
   const handleChange = (newTime) => {
     setTime(newTime);
@@ -70,49 +71,49 @@ const Reservar = () => {
     }
   };
 
-  const handleReservar = () => {
+  const handleReservar = async (e) => {
+    e.preventDefault();
     if (
-      !nombre ||
       !telefono ||
       !selectedDate ||
       !time ||
       telefono.length !== 10
     ) {
-      setErrorMensaje(
-        'Por favor, complete todos los campos y asegúrese de ingresar un número de teléfono válido de 10 dígitos.'
-      );
+      setModalMessage('Por favor, complete todos los campos y asegúrese de ingresar un número de teléfono válido de 10 dígitos.');
       setModalVisible(true);
     } else {
-      // Obtener el rango de hora seleccionado
-
       const fechaSeleccionada = moment(selectedDate);
       const ahora = moment();
 
-      if (
-        fechaSeleccionada.isBefore(ahora, 'day') 
-      ) {
-        setErrorMensaje('Por favor, elija una fecha y hora válida.');
+      if (fechaSeleccionada.isBefore(ahora, 'day')) {
+        setModalMessage('Por favor, elija una fecha y hora válida.');
         setModalVisible(true);
       } else {
-        const nuevaReserva = {
-          nombre,
-          telefono,
-          deporte,
-          tipo,
-          fecha: selectedDate.toString(),
-          time
-        };
-        console.log(time)
-        setReservas([...reservas, nuevaReserva]); // Agregar la reserva al arreglo
+        try {
+          const response = await axios.post(
+            "http://localhost:4000/api/reservas",
+            { 
+              telefono, 
+              fecha_hora: selectedDate, 
+              duracion: 2,
+              cliente: session.nombre,
+              cancha: deporte, // Pasar el nombre de usuario desde el contexto de sesión
+            }
+          );
 
-        // Restablecer los valores del formulario
-        setNombre('');
-        setTelefono('');
-        setDeporte('any');
-        setTipo('none');
-        setSelectedDate(null);
-        setTime(''); // Restablecer el rango de tiempo a 1 hora
-        setReservaExitosa(true);
+          // Restablecer los valores del formulario después de una reserva exitosa
+          setTelefono('');
+          setDeporte('any');
+          setTipo('none');
+          setSelectedDate(null);
+          setTime('');
+          setModalMessage(response.data.message || 'Reserva creada exitosamente.');
+          setReservaExitosa(true);
+          setModalVisible(true);
+        } catch (error) {
+          setModalMessage('Error al registrar la reserva.');
+          setModalVisible(true);
+        }
       }
     }
   };
@@ -121,28 +122,12 @@ const Reservar = () => {
     setModalVisible(false);
   };
 
-  const eliminarReserva = (index) => {
-    const nuevasReservas = [...reservas];
-    nuevasReservas.splice(index, 1);
-    setReservas(nuevasReservas);
-  };
-
   return (
     <div className="contenedor">
       <br />
       <div className="translucent-form-overlay">
         <form>
           <h3>Reservas</h3>
-          <div className="row columns">
-            <label>Nombre
-              <input
-                type="text"
-                name="nombre"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
-              />
-            </label>
-          </div>
           <div className="row columns">
             <label>Teléfono
               <input
@@ -222,57 +207,14 @@ const Reservar = () => {
         </form>
       </div>
       <br />
-      <div className="contenedorDeReservas">
-        <ul className="contenedorReservados">
-          {reservas.map((reserva, index) => (
-            <li key={index} className="reserva-item">
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Nombre:</td>
-                    <td>{reserva.nombre}</td>
-                  </tr>
-                  <tr>
-                    <td>Teléfono:</td>
-                    <td>{reserva.telefono}</td>
-                  </tr>
-                  <tr>
-                    <td>Deporte:</td>
-                    <td>{reserva.deporte}</td>
-                  </tr>
-                  <tr>
-                    <td>Tipo:</td>
-                    <td>{reserva.tipo}</td>
-                  </tr>
-                  <tr>
-                    <td>Fecha:</td>
-                    <td>{moment(reserva.fecha).format('YYYY-MM-DD')}</td>
-                  </tr>
-                  <tr>
-                    <td>Hora</td>
-                    <td>{reserva.time}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <button
-                onClick={() => eliminarReserva(index)}
-                className="eliminar-button"
-              >
-                Eliminar
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <br />
       <Modal
         isOpen={modalVisible}
         onRequestClose={closeModal}
         style={customModalStyles}
-        contentLabel="Error Modal"
+        contentLabel="Mensaje del servidor"
       >
-        <h2>Error</h2>
-        <p>{errorMensaje}</p>
+        <h2>Mensaje</h2>
+        <p>{modalMessage}</p>
         <button onClick={closeModal}>Cerrar</button>
       </Modal>
       <Modal

@@ -14,14 +14,20 @@ const reservaSchema = mongoose.Schema(
             trim: true
         },
         cliente: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Usuario",
+            type: String,
+            required: true,
+            trim: true
             
         },
         cancha: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Canchas",
-            //required: true,
+            type: String,
+            required: true,
+            trim: true
+        },
+        telefono: {
+            type: Number,
+            trim: true,
+            required: true,
         },
     },
     {
