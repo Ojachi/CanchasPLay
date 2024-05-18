@@ -156,4 +156,5 @@ const actualizar = async (req, res) => {
 };
 
 
+
 export { registrar, autenticar, perfil, actualizar };
