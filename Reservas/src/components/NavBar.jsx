@@ -61,20 +61,19 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-      <Outlet></Outlet>
+      <Outlet />
       <footer className="marketing-site-footer">
         <div className="row medium-unstack">
           <div className="medium-4 columns">
             <h4 className="marketing-site-footer-name">CanchasPlay</h4>
             <p>
-              Pasa un buen rato en en compañia con tus amigos, llama para
-              resrvar tu cancha de futbol o de tejo.
+              Pasa un buen rato en compañía con tus amigos, llama para reservar tu cancha de fútbol o de tejo.
             </p>
             <br />
             <ul className="menu marketing-site-footer-menu-social simple">
               <li>
                 <a href="#">
-                  <i className="fa fa-instagram " aria-hidden="true"></i>
+                  <i className="fa fa-instagram" aria-hidden="true"></i>
                 </a>
               </li>
               <li>
@@ -93,7 +92,7 @@ const NavBar = () => {
           </div>
           <div className="medium-4 columns">
             <h4 className="marketing-site-footer-title">
-              Informacion de contacto
+              Información de contacto
             </h4>
             <div className="marketing-site-footer-block">
               <i className="fa fa-map-marker" aria-hidden="true"></i>

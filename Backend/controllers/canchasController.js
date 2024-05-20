@@ -10,21 +10,6 @@ const registrar = async (req, res) => {
     }
 };
 
-//eliminar canchas
-
-// const eliminarC = async (req, res) => {
-//     const usuario = req.usuario; // Suponiendo que ya has autenticado al usuario y has guardado sus datos en req.usuario
-
-// // Autenticacion de usuario admin
-//     if (usuario.esAdmin) {
-//         //eliminar canchas
-//         const cancha = await Canchas.findByIdAndDelete(req.params.id);
-
-//         res.json({ msg: "Se elimino la cancha" });
-//     } else {
-//         res.status(403).json({ msg: "No tienes permiso para realizar esta acción" });
-//     }
-// };
 
 const eliminar = async (req, res) => {
     const { id } = req.params;
@@ -47,6 +32,15 @@ const eliminar = async (req, res) => {
 
 // Obtener canchas 
 
+const obtenerCanchas = async (req, res) => {
+    try {
+      const canchas = await Canchas.find();
+      res.json(canchas);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 
-export { registrar, eliminar };
+
+export { registrar, eliminar, obtenerCanchas, };

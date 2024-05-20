@@ -1,7 +1,7 @@
 import express, { request } from "express";
 import conectarDB from "./config/db.js";
 import dotenv from "dotenv";
-import cors from "cors"
+import cors from "cors";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import canchasRoutes from "./routes/canchasRoutes.js";
 import reservaRoutes from "./routes/reservaRoutes.js";
@@ -31,7 +31,7 @@ const corsOption = {
 
 app.use(cors(corsOption));
 
-app.options('*', cors(corsOption));
+app.options("*", cors(corsOption));
 
 //routing
 app.use("/api/usuarios", usuarioRoutes);

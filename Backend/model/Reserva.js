@@ -1,12 +1,10 @@
 import mongoose from "mongoose";
 
-
 const reservaSchema = mongoose.Schema(
     {
         fecha_hora: {
             type: Date,
-            default: Date.now(),
-            //required: true,
+            required: true,
         },
         duracion: {
             type: Number,
@@ -14,18 +12,19 @@ const reservaSchema = mongoose.Schema(
             trim: true
         },
         cliente: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Usuario',
             required: true,
             trim: true
-            
         },
         cancha: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Canchas',
             required: true,
             trim: true
         },
         telefono: {
-            type: Number,
+            type: String,
             trim: true,
             required: true,
         },
@@ -35,5 +34,6 @@ const reservaSchema = mongoose.Schema(
         _id: { auto: true }
     }
 );
+
 const Reserva = mongoose.model("Reservas", reservaSchema);
 export default Reserva;
