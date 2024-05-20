@@ -44,6 +44,7 @@ const Reservar = () => {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [selectedReserva, setSelectedReserva] = useState(null);
   const [serverResponse, setServerResponse] = useState("");
+  const [loginModalVisible, setLoginModalVisible] = useState(false); // Nuevo estado para el modal de login
 
   const fetchReservas = async () => {
     try {
@@ -141,7 +142,11 @@ const Reservar = () => {
   };
 
   const toggleReservas = () => {
-    setShowReservas(!showReservas);
+    if (!session.id) {
+      setLoginModalVisible(true); // Mostrar el modal de login si no ha iniciado sesión
+    } else {
+      setShowReservas(!showReservas);
+    }
   };
 
   const handleDeleteReserva = async (reservaId) => {
@@ -181,6 +186,10 @@ const Reservar = () => {
     setModalVisible(false);
   };
 
+  const closeLoginModal = () => {
+    setLoginModalVisible(false);
+  };
+
   return (
     <div className="reservar-container">
       <button
@@ -194,6 +203,9 @@ const Reservar = () => {
         <div className="translucent-form-overlay">
           <form>
             <h3>Reservas</h3>
+            {!session.id && (
+              <p style={{ color: 'red' }}>Inicie sesión para reservar</p>
+            )}
             <div className="row columns">
               <label>
                 Teléfono
@@ -202,6 +214,7 @@ const Reservar = () => {
                   name="telefono"
                   value={telefono}
                   onChange={(e) => setTelefono(e.target.value)}
+                  disabled={!session.id} // Deshabilitar si no ha iniciado sesión
                 />
               </label>
             </div>
@@ -213,6 +226,7 @@ const Reservar = () => {
                   type="text"
                   value={deporte}
                   onChange={(e) => setDeporte(e.target.value)}
+                  disabled={!session.id} // Deshabilitar si no ha iniciado sesión
                 >
                   <option value="none">Seleccionar</option>
                   {canchas.map((cancha) => (
@@ -234,6 +248,7 @@ const Reservar = () => {
                   timeFormat="HH:mm"
                   timeIntervals={60}
                   dateFormat="yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                  disabled={!session.id} // Deshabilitar si no ha iniciado sesión
                 />
               </div>
             </div>
@@ -245,6 +260,7 @@ const Reservar = () => {
                 type="text"
                 onChange={handleHora}
                 value={time}
+                disabled={!session.id} // Deshabilitar si no ha iniciado sesión
               >
                 <option value="none">Seleccionar</option>
                 <option value="1">1 hora</option>
@@ -266,6 +282,7 @@ const Reservar = () => {
               type="button"
               className="primary button expanded search-button"
               onClick={handleReservar}
+              disabled={!session.id} // Deshabilitar si no ha iniciado sesión
             >
               Reservar
             </button>
@@ -348,6 +365,16 @@ const Reservar = () => {
         <h2>Mensaje</h2>
         <p>{serverResponse}</p>
         <button onClick={closeResponseModal}>Cerrar</button>
+      </Modal>
+      <Modal
+        isOpen={loginModalVisible}
+        onRequestClose={closeLoginModal}
+        style={customModalStyles}
+        contentLabel="Iniciar Sesión"
+      >
+        <h2>Iniciar Sesión</h2>
+        <p>Debe iniciar sesión para ver sus reservas.</p>
+        <button onClick={closeLoginModal}>Cerrar</button>
       </Modal>
     </div>
   );

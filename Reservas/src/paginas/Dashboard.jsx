@@ -4,6 +4,7 @@ import 'foundation-sites/dist/css/foundation.min.css';
 import Modal from 'react-modal';
 import { SessionContext } from "../components/Session";
 import EditarReserva from '../components/EditarReserva';
+import {  useNavigate } from "react-router-dom";
 
 const customModalStyles = {
   content: {
@@ -32,8 +33,19 @@ const Dashboard = () => {
   const [selectedReserva, setSelectedReserva] = useState(null);
   const [selectedCancha, setSelectedCancha] = useState(null);
   const [serverResponse, setServerResponse] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const checkAdmin = () => {
+      if (!session || !session.esAdmin) {
+        setTimeout(() => {
+          navigate("/"); 
+        }, 5000);
+      }
+    };
+
+    checkAdmin();
+
     const fetchReservas = async () => {
       try {
         const response = await axios.get('http://localhost:4000/api/reservas/admin');
@@ -61,10 +73,12 @@ const Dashboard = () => {
       }
     };
 
-    fetchReservas();
-    fetchUsuarios();
-    fetchCanchas();
-  }, []);
+    if (session && session.esAdmin) {
+      fetchReservas();
+      fetchUsuarios();
+      fetchCanchas();
+    }
+  }, [session, history]);
 
   const openModal = (type, reserva = null, cancha = null) => {
     setModalType(type);
@@ -115,6 +129,15 @@ const Dashboard = () => {
   const handleServerResponse = (message) => {
     setServerResponse(message);
   };
+
+  if (!session || !session.esAdmin) {
+    return (
+      <div className="access-denied">
+        <h1>Acceso Denegado</h1>
+        <p>No tiene acceso a este lugar. Será redirigido a la página principal en 5 segundos.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-container">

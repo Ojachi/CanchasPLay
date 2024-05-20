@@ -21,7 +21,7 @@ const NavBar = () => {
               <i className="fas fa-user" />
             </button>
             <div className="dropdown-content">
-              <Link to="/dashboard">
+              <Link to="Dashboard">
                 <i className="fas fa-user-cog" />
               </Link>
               <Link to="#" onClick={() => setSession({})}>
