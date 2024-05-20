@@ -3,6 +3,7 @@ import axios from 'axios';
 import 'foundation-sites/dist/css/foundation.min.css';
 import Modal from 'react-modal';
 import { SessionContext } from "../components/Session";
+import EditarReserva from '../components/EditarReserva';
 
 const customModalStyles = {
   content: {
@@ -30,18 +31,13 @@ const Dashboard = () => {
   const [modalType, setModalType] = useState('');
   const [selectedReserva, setSelectedReserva] = useState(null);
   const [selectedCancha, setSelectedCancha] = useState(null);
-  const [formValues, setFormValues] = useState({
-    fecha_hora: '',
-    duracion: '',
-    cancha: '',
-  });
+  const [serverResponse, setServerResponse] = useState('');
 
   useEffect(() => {
     const fetchReservas = async () => {
       try {
         const response = await axios.get('http://localhost:4000/api/reservas/admin');
         setReservas(response.data);
-        console.log(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -74,11 +70,6 @@ const Dashboard = () => {
     setModalType(type);
     setSelectedReserva(reserva);
     setSelectedCancha(cancha);
-    setFormValues({
-      fecha_hora: reserva ? reserva.fecha_hora : '',
-      duracion: reserva ? reserva.duracion : '',
-      cancha: reserva ? reserva.cancha._id : '',
-    });
     setModalIsOpen(true);
   };
 
@@ -90,22 +81,21 @@ const Dashboard = () => {
     try {
       await axios.delete(`http://localhost:4000/api/reservas/${selectedReserva._id}`);
       setReservas(reservas.filter(reserva => reserva._id !== selectedReserva._id));
+      setServerResponse('Reserva eliminada correctamente.');
       closeModal();
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleUpdateReserva = async () => {
+  const handleSave = async () => {
+    await fetchReservas();
+  };
+
+  const fetchReservas = async () => {
     try {
-      const updatedReserva = {
-        fecha_hora: formValues.fecha_hora,
-        duracion: formValues.duracion,
-        cancha: formValues.cancha,
-      };
-      await axios.put(`http://localhost:4000/api/reservas/${selectedReserva._id}`, updatedReserva);
-      setReservas(reservas.map(reserva => (reserva._id === selectedReserva._id ? updatedReserva : reserva)));
-      closeModal();
+      const response = await axios.get('http://localhost:4000/api/reservas/admin');
+      setReservas(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -115,15 +105,15 @@ const Dashboard = () => {
     try {
       await axios.delete(`http://localhost:4000/api/canchas/${selectedCancha._id}`);
       setCanchas(canchas.filter(cancha => cancha._id !== selectedCancha._id));
+      setServerResponse('Cancha eliminada correctamente.');
       closeModal();
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+  const handleServerResponse = (message) => {
+    setServerResponse(message);
   };
 
   return (
@@ -222,26 +212,13 @@ const Dashboard = () => {
           </>
         )}
         {modalType === 'editReserva' && (
-          <>
-            <h2>Editar Reserva</h2>
-            <form>
-              <label>Fecha y Hora
-                <input type="datetime-local" name="fecha_hora" value={formValues.fecha_hora} onChange={handleInputChange} />
-              </label>
-              <label>Duración
-                <input type="number" name="duracion" value={formValues.duracion} onChange={handleInputChange} />
-              </label>
-              <label>Cancha
-                <select name="cancha" value={formValues.cancha} onChange={handleInputChange}>
-                  {canchas.map((cancha) => (
-                    <option key={cancha._id} value={cancha._id}>{cancha.nombre}</option>
-                  ))}
-                </select>
-              </label>
-              <button type="button" className="button" onClick={handleUpdateReserva}>Guardar</button>
-              <button type="button" className="button" onClick={closeModal}>Cancelar</button>
-            </form>
-          </>
+          <EditarReserva
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            reserva={selectedReserva}
+            onSave={handleSave}
+            onResponse={handleServerResponse}
+          />
         )}
         {modalType === 'deleteCancha' && (
           <>
@@ -252,6 +229,19 @@ const Dashboard = () => {
           </>
         )}
       </Modal>
+
+      {serverResponse && (
+        <Modal
+          isOpen={!!serverResponse}
+          onRequestClose={() => setServerResponse('')}
+          style={customModalStyles}
+          contentLabel="Respuesta del Servidor"
+        >
+          <h2>Mensaje</h2>
+          <p>{serverResponse}</p>
+          <button onClick={() => setServerResponse('')}>Cerrar</button>
+        </Modal>
+      )}
     </div>
   );
 };

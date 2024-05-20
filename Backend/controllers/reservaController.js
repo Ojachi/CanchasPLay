@@ -2,12 +2,15 @@ import Reserva from "../model/Reserva.js";
 
 const obtenerReservas = async (req, res) => {
   try {
-    console.log(req.body);
-    const reservas = await Reserva.find()
-      .where("cliente")
-      .equals(req.cliente)
+    const { cliente } = req.query;
+    if (!cliente) {
+      return res.status(400).json({ message: "Cliente ID es requerido" });
+    }
+
+    const reservas = await Reserva.find({ cliente })
       .populate("cliente", "nombre")
       .populate("cancha", "tipo_cancha");
+    
     res.json(reservas);
   } catch (error) {
     console.log(error);
@@ -29,7 +32,6 @@ const obtenerReservasAd = async (req, res) => {
 const registrar = async (req, res) => {
   const { fecha_hora, duracion, telefono, cliente, cancha } = req.body;
 
-  // Verificar disponibilidad de la cancha
   const fechaInicio = new Date(fecha_hora);
   const fechaFin = new Date(fecha_hora);
   fechaFin.setHours(fechaFin.getHours() + duracion);
@@ -65,8 +67,7 @@ const registrar = async (req, res) => {
 
     if (reservasExistentes.length > 0) {
       return res.status(400).json({
-        message:
-          "La cancha no está disponible en la fecha y hora seleccionada.",
+        message: "La cancha no está disponible en la fecha y hora seleccionada.",
       });
     }
 
@@ -89,7 +90,6 @@ const registrar = async (req, res) => {
   }
 };
 
-// Obtener una reserva específica por ID
 const obtenerReserva = async (req, res) => {
   const { id } = req.params;
 
@@ -107,17 +107,12 @@ const obtenerReserva = async (req, res) => {
   res.json(reserva);
 };
 
-// Actualizar reserva
 const actualizar = async (req, res) => {
   const { id } = req.params;
   const reserva = await Reserva.findById(id);
 
   if (!reserva) {
     const error = new Error("No encontrado");
-    return res.status(404).json({ msg: error.message });
-  }
-  if (reserva.cliente.toString() !== req.usuario._id.toString()) {
-    const error = new Error("Acción no válida");
     return res.status(404).json({ msg: error.message });
   }
 
@@ -127,24 +122,20 @@ const actualizar = async (req, res) => {
 
   try {
     const reservaAlmacenada = await reserva.save();
-    res.json(reservaAlmacenada);
-    res.json({ msg: "Reserva actualizada correctamente" });
+    res.json({ msg: "Reserva actualizada correctamente", reserva: reservaAlmacenada });
   } catch (error) {
     console.log(error);
+    res.status(500).json({ message: "Error al actualizar la reserva." });
   }
 };
 
-// Eliminar reserva
 const eliminar = async (req, res) => {
+  console.log(req.params);
   const { id } = req.params;
 
   const reserva = await Reserva.findById(id);
   if (!reserva) {
     const error = new Error("No encontrado");
-    return res.status(404).json({ msg: error.message });
-  }
-  if (reserva.cliente.toString() !== req.usuario._id.toString()) {
-    const error = new Error("Acción no válida");
     return res.status(404).json({ msg: error.message });
   }
 
@@ -153,6 +144,7 @@ const eliminar = async (req, res) => {
     res.json({ msg: "Reserva eliminada correctamente" });
   } catch (error) {
     console.log(error);
+    res.status(500).json({ message: "Error al eliminar la reserva" });
   }
 };
 

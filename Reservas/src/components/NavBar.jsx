@@ -14,18 +14,36 @@ const NavBar = () => {
         </Link>
       );
     } else {
-      return (
-        <div className="dropdown">
-          <button className="dropbtn">
-            <i className="fas fa-user" />
-          </button>
-          <div className="dropdown-content">
-            <Link to="#" onClick={() => setSession({})}>
-              Log out
-            </Link>
+      if (session.esAdmin === true) {
+        return (
+          <div className="dropdown">
+            <button className="dropbtn">
+              <i className="fas fa-user" />
+            </button>
+            <div className="dropdown-content">
+              <Link to="/dashboard">
+                <i className="fas fa-user-cog" />
+              </Link>
+              <Link to="#" onClick={() => setSession({})}>
+                Log out
+              </Link>
+            </div>
           </div>
-        </div>
-      );
+        );
+      } else {
+        return (
+          <div className="dropdown">
+            <button className="dropbtn">
+              <i className="fas fa-user" />
+            </button>
+            <div className="dropdown-content">
+              <Link to="#" onClick={() => setSession({})}>
+                Log out
+              </Link>
+            </div>
+          </div>
+        );
+      }
     }
   };
   return (
@@ -67,7 +85,8 @@ const NavBar = () => {
           <div className="medium-4 columns">
             <h4 className="marketing-site-footer-name">CanchasPlay</h4>
             <p>
-              Pasa un buen rato en compañía con tus amigos, llama para reservar tu cancha de fútbol o de tejo.
+              Pasa un buen rato en compañía con tus amigos, llama para reservar
+              tu cancha de fútbol o de tejo.
             </p>
             <br />
             <ul className="menu marketing-site-footer-menu-social simple">

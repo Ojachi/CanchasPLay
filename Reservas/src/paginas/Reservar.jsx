@@ -1,12 +1,13 @@
 import { useState, useContext, useEffect } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { SessionContext } from "../components/Session";
 import Modal from "react-modal";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import CustomTimePicker from "../components/selectFecha";
 import CustomTimePicker2 from "../components/selectHoraFin";
+import EditarReserva from "../components/EditarReserva"; // Importar el componente EditarReserva
 
 const customModalStyles = {
   content: {
@@ -39,33 +40,37 @@ const Reservar = () => {
   const [reservaExitosa, setReservaExitosa] = useState(false);
   const [showReservas, setShowReservas] = useState(false);
   const [reservas, setReservas] = useState([]);
-  const [canchas, setCanchas] = useState([]); // Nuevo estado para las canchas
+  const [canchas, setCanchas] = useState([]);
+  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+  const [selectedReserva, setSelectedReserva] = useState(null);
+  const [serverResponse, setServerResponse] = useState("");
 
-  console.log(session);
+  const fetchReservas = async () => {
+    try {
+      const response = await axios.get(`http://localhost:4000/api/reservas`, {
+        params: { cliente: session.id },
+      });
+      setReservas(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchCanchas = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/api/canchas");
+      setCanchas(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    const fetchReservas = async () => {
-      try {
-        const response = await axios.get(`http://localhost:4000/api/reservas`, {
-          params: { cliente: session.id },
-        });
-        setReservas(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const fetchCanchas = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/api/canchas");
-        setCanchas(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchReservas();
-    fetchCanchas(); // Llamar a fetchCanchas para obtener las canchas
-  }, [session.usuarioId]);
+    if (session.id) {
+      fetchReservas();
+    }
+    fetchCanchas();
+  }, [session.id]);
 
   const handleChange = (newTime) => {
     setTime(newTime);
@@ -124,14 +129,9 @@ const Reservar = () => {
           setReservaExitosa(true);
           setModalVisible(true);
 
-          // Actualizar las reservas
-          const updatedReservas = await axios.get(
-            `http://localhost:4000/api/reservas`,
-            {
-              params: { cliente: session.usuarioId },
-            }
-          );
-          setReservas(updatedReservas.data);
+          // Volver a cargar las reservas desde el backend para asegurarse de que los datos estén actualizados
+          fetchReservas();
+
         } catch (error) {
           setModalMessage("Error al registrar la reserva.");
           setModalVisible(true);
@@ -157,8 +157,24 @@ const Reservar = () => {
   };
 
   const handleEditReserva = (reserva) => {
-    setModalMessage("Funcionalidad de edición en construcción.");
-    setModalVisible(true);
+    setSelectedReserva(reserva);
+    setEditModalIsOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setEditModalIsOpen(false);
+  };
+
+  const handleSave = async () => {
+    await fetchReservas();
+  };
+
+  const handleServerResponse = (message) => {
+    setServerResponse(message);
+  };
+
+  const closeResponseModal = () => {
+    setServerResponse("");
   };
 
   const closeModal = () => {
@@ -217,7 +233,7 @@ const Reservar = () => {
                   showTimeSelect
                   timeFormat="HH:mm"
                   timeIntervals={60}
-                  dateFormat="yyyy-MM-dd'T'HH:mm:ss.SSSXXX" // Formato ISO 8601
+                  dateFormat="yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
                 />
               </div>
             </div>
@@ -275,7 +291,7 @@ const Reservar = () => {
                   <td>{index + 1}</td>
                   <td>{new Date(reserva.fecha_hora).toLocaleString()}</td>
                   <td>{reserva.duracion}</td>
-                  <td>{reserva.cancha}</td>
+                  <td>{reserva.cancha.tipo_cancha}</td>
                   <td>{reserva.telefono}</td>
                   <td>
                     <button
@@ -315,6 +331,23 @@ const Reservar = () => {
       >
         <h2>Reserva Exitosa</h2>
         <button onClick={() => setReservaExitosa(false)}>Cerrar</button>
+      </Modal>
+      <EditarReserva
+        isOpen={editModalIsOpen}
+        onRequestClose={closeEditModal}
+        reserva={selectedReserva}
+        onSave={handleSave}
+        onResponse={handleServerResponse}
+      />
+      <Modal
+        isOpen={!!serverResponse}
+        onRequestClose={closeResponseModal}
+        style={customModalStyles}
+        contentLabel="Respuesta del Servidor"
+      >
+        <h2>Mensaje</h2>
+        <p>{serverResponse}</p>
+        <button onClick={closeResponseModal}>Cerrar</button>
       </Modal>
     </div>
   );

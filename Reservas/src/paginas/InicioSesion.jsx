@@ -50,7 +50,7 @@ function InicioSesion() {
         if (session.esAdmin) {
           navigate("/dashboard"); // Ruta del dashboard del administrador
         } else {
-          navigate("/reservas"); // Ruta para usuarios generales
+          navigate("/"); // Ruta para usuarios generales
         }
       }, 1000); // 1 segundo de espera antes de redirigir
 
