@@ -7,11 +7,6 @@ const canchaSchema = mongoose.Schema(
             required: true,
             trim: true
         },
-        deporte : {
-            type: String,
-            required: true,
-            trim: true
-        },
 
         descripcion: {
             type: String,

@@ -4,7 +4,7 @@ import 'foundation-sites/dist/css/foundation.min.css';
 import Modal from 'react-modal';
 import { SessionContext } from "../components/Session";
 import EditarReserva from '../components/EditarReserva';
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaExclamationTriangle } from 'react-icons/fa';
 
 const customModalStyles = {
@@ -34,6 +34,7 @@ const Dashboard = () => {
   const [selectedReserva, setSelectedReserva] = useState(null);
   const [selectedCancha, setSelectedCancha] = useState(null);
   const [serverResponse, setServerResponse] = useState('');
+  const [newCancha, setNewCancha] = useState({ tipo_cancha: '', descripcion: '' });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -79,7 +80,7 @@ const Dashboard = () => {
       fetchUsuarios();
       fetchCanchas();
     }
-  }, [session, history]);
+  }, [session, navigate]);
 
   const openModal = (type, reserva = null, cancha = null) => {
     setModalType(type);
@@ -131,6 +132,23 @@ const Dashboard = () => {
     setServerResponse(message);
   };
 
+  const handleNewCanchaChange = (e) => {
+    const { name, value } = e.target;
+    setNewCancha({ ...newCancha, [name]: value });
+  };
+
+  const handleAddCancha = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    try {
+      const response = await axios.post('http://localhost:4000/api/canchas', newCancha);
+      setCanchas([...canchas, response.data]);
+      setServerResponse('Cancha agregada correctamente.');
+      closeModal();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (!session || !session.esAdmin) {
     return (
       <div className="access-denied">
@@ -145,6 +163,7 @@ const Dashboard = () => {
     <div className="dashboard-container">
       <div className="dashboard-canchas">
         <h1>Canchas</h1>
+        <button className="button primary" onClick={() => openModal('addCancha')}>Agregar Cancha</button>
         <table className="hover">
           <thead>
             <tr>
@@ -251,6 +270,33 @@ const Dashboard = () => {
             <p>¿Está seguro de que desea eliminar esta cancha?</p>
             <button className="button alert" onClick={handleDeleteCancha}>Eliminar</button>
             <button className="button" onClick={closeModal}>Cancelar</button>
+          </>
+        )}
+        {modalType === 'addCancha' && (
+          <>
+            <h2>Agregar Nueva Cancha</h2>
+            <form onSubmit={handleAddCancha}>
+              <label>Nombre
+                <input
+                  type="text"
+                  name="tipo_cancha"
+                  value={newCancha.tipo_cancha}
+                  onChange={handleNewCanchaChange}
+                  required
+                />
+              </label>
+              <label>Descripción
+                <input
+                  type="text"
+                  name="descripcion"
+                  value={newCancha.descripcion}
+                  onChange={handleNewCanchaChange}
+                  required
+                />
+              </label>
+              <button type="submit" className="button primary">Guardar</button>
+              <button type="button" className="button" onClick={closeModal}>Cancelar</button>
+            </form>
           </>
         )}
       </Modal>

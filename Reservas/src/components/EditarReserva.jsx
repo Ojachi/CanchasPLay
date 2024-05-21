@@ -15,7 +15,9 @@ const customModalStyles = {
     background: '#333',
     color: '#fff',
     borderRadius: '8px',
-    maxWidth: '300px',
+    maxWidth: '600px',
+    width: '30%',
+    padding: '40px',  
   },
 };
 
@@ -82,7 +84,8 @@ const EditarReserva = ({ isOpen, onRequestClose, reserva, onSave, onResponse }) 
     >
       <h2>Editar Reserva</h2>
       <form onSubmit={handleSubmit}>
-        <label>Fecha y Hora
+        <div>
+        <label style={{ color: 'white' }}>Fecha y Hora</label>
           <DatePicker
             selected={formValues.fecha_hora}
             onChange={(date) => setFormValues({ ...formValues, fecha_hora: date })}
@@ -90,18 +93,20 @@ const EditarReserva = ({ isOpen, onRequestClose, reserva, onSave, onResponse }) 
             showTimeSelect
             timeFormat="HH:mm"
             timeIntervals={60}
-            dateFormat="yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+            dateFormat="yyyy-MM-dd'T'HH:mm"
           />
-        </label>
-        <label>Duración
+        </div>
+        <div>
+        <label style={{ color: 'white' }}>Duración</label>
           <input
             type="number"
             name="duracion"
             value={formValues.duracion}
             onChange={handleInputChange}
           />
-        </label>
-        <label>Cancha
+        </div>
+        <div>
+        <label style={{ color: 'white' }}>Cancha</label>
           <select
             name="cancha"
             value={formValues.cancha}
@@ -114,12 +119,12 @@ const EditarReserva = ({ isOpen, onRequestClose, reserva, onSave, onResponse }) 
               </option>
             ))}
           </select>
-        </label>
-        <button type="submit" className="button">Guardar</button>
+        </div>
         <button type="button" className="button" onClick={onRequestClose}>Cancelar</button>
+        <button type="submit" className="button">Guardar</button>
       </form>
     </Modal>
   );
 };
 
-export default EditarReserva;
+export default EditarReserva;
