@@ -32,7 +32,6 @@ const Reservar = () => {
   const [deporte, setDeporte] = useState("any");
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const [reservaExitosa, setReservaExitosa] = useState(false);
   const [showReservas, setShowReservas] = useState(false);
   const [reservas, setReservas] = useState([]);
   const [canchas, setCanchas] = useState([]);
@@ -108,7 +107,6 @@ const Reservar = () => {
           setModalMessage(
             response.data.message || "Reserva creada exitosamente."
           );
-          setReservaExitosa(true);
           setModalVisible(true);
 
           // Volver a cargar las reservas desde el backend para asegurarse de que los datos estén actualizados
@@ -309,17 +307,8 @@ const Reservar = () => {
       >
         <h2>Mensaje</h2>
         <p>{modalMessage}</p>
-        <button onClick={closeModal}>Cerrar</button>
       </Modal>
-      <Modal
-        isOpen={reservaExitosa}
-        onRequestClose={() => setReservaExitosa(false)}
-        style={customModalStyles}
-        contentLabel="Reserva Exitosa Modal"
-      >
-        <h2>Reserva Exitosa</h2>
-        <button onClick={() => setReservaExitosa(false)}>Cerrar</button>
-      </Modal>
+      
       <EditarReserva
         isOpen={editModalIsOpen}
         onRequestClose={closeEditModal}

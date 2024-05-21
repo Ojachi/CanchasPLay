@@ -120,8 +120,8 @@ const EditarReserva = ({ isOpen, onRequestClose, reserva, onSave, onResponse }) 
             ))}
           </select>
         </div>
-        <button type="button" className="button" onClick={onRequestClose}>Cancelar</button>
-        <button type="submit" className="button">Guardar</button>
+        <button type="button" className="button alert" onClick={onRequestClose}>Cancelar</button>
+        <button type="submit" className="button ">Guardar</button>
       </form>
     </Modal>
   );

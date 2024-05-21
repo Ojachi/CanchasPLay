@@ -7,7 +7,7 @@ const canchaSchema = mongoose.Schema(
             required: true,
             trim: true
         },
-
+ 
         descripcion: {
             type: String,
             required: true,

@@ -18,6 +18,15 @@
   list-style: none;
 }
 
+#iconouserad {
+  font-size: larger;
+}
+#iconouserad:hover{
+  color: #000;
+  transition: all 0.3s ease;
+
+}
+
 .topbar-sticky-shrink .menu a {
   background: #2c3840 !important;
   display: block;
@@ -62,11 +71,13 @@
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  transform: translateX(-35%);
+  text-align: center;
 }
 
 .dropdown-content a {
   color: #ffffff;
-  padding: 12px 16px;
+  padding: 12px 6px;
   text-decoration: none;
   display: block;
 }
@@ -85,37 +96,49 @@
 
 /* dashboard styles */
 .dashboard-container {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  background-image: radial-gradient(circle at 69% 86%, rgba(165, 165, 165,0.06) 0%, rgba(165, 165, 165,0.06) 25%,rgba(193, 193, 193,0.06) 25%, rgba(193, 193, 193,0.06) 50%,rgba(221, 221, 221,0.06) 50%, rgba(221, 221, 221,0.06) 75%,rgba(249, 249, 249,0.06) 75%, rgba(249, 249, 249,0.06) 100%),radial-gradient(circle at 49% 76%, rgba(129, 129, 129,0.06) 0%, rgba(129, 129, 129,0.06) 25%,rgba(164, 164, 164,0.06) 25%, rgba(164, 164, 164,0.06) 50%,rgba(200, 200, 200,0.06) 50%, rgba(200, 200, 200,0.06) 75%,rgba(235, 235, 235,0.06) 75%, rgba(235, 235, 235,0.06) 100%),radial-gradient(circle at 22% 64%, rgba(173, 173, 173,0.06) 0%, rgba(173, 173, 173,0.06) 25%,rgba(119, 119, 119,0.06) 25%, rgba(119, 119, 119,0.06) 50%,rgba(64, 64, 64,0.06) 50%, rgba(64, 64, 64,0.06) 75%,rgba(10, 10, 10,0.06) 75%, rgba(10, 10, 10,0.06) 100%),linear-gradient(307deg, rgb(255,255,255),rgb(255,255,255));
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  
 }
 
 .dashboard-canchas, .dashboard-reservas, .dashboard-usuarios {
   margin: 0 auto;
   width: 80%;
+
 }
 
 .dashboard-container table {
   width: 100%;
   margin-bottom: 1rem;
   border-collapse: collapse;
+  box-shadow: 0px 0px 5px 1px rgb(41, 40, 40);
+  
 }
+
 
 .dashboard-container table, .dashboard-container th, .dashboard-container td {
   border: 1px solid #ddd;
+  
 }
 
 .dashboard-container th, .dashboard-container td {
   padding: 0.5rem;
   text-align: left;
+  
 }
 
 .dashboard-container th {
   background-color: #f4f4f4;
+  
 }
 
 .dashboard-container tr:nth-child(even) {
   background-color: #f9f9f9;
+  
 }
 
 .dashboard-container tr:hover {
@@ -125,6 +148,10 @@
 .dashboard-container h1 {
   text-align: center;
   margin-bottom: 1rem;
+}
+
+#btnAddCan {
+  box-shadow: 0px 0px 5px 1px rgb(41, 40, 40);
 }
 
 /* Footer */
@@ -430,8 +457,9 @@
   left: 10%;
   z-index: 2;
   color: white;
-  width: 80%;
+  width: 50%;
   font-size: 24px;
+  font-weight: bold;
 }
 
 .textoCan_1,
@@ -441,8 +469,9 @@
   top: 25%;
   left: 10%;
   z-index: 2;
-  color: rgb(255, 5, 5);
+  color: rgb(254, 254, 0);
   font-size: 48px;
+  font-weight: bolder;
 }
 
 .slider-section1 img {
@@ -574,9 +603,7 @@
   color: #ffffff;
 }
 
-.reservas-list tr:nth-child(even) {
-  background-color: #555;
-}
+
 
 .reservas-list tr:hover {
   background-color: #666;

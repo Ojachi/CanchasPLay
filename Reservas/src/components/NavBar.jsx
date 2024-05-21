@@ -18,13 +18,13 @@ const NavBar = () => {
         return (
           <div className="dropdown">
             <button className="dropbtn">
-              <i className="fas fa-user" />
+              <i className="fas fa-user-tie" id="iconouserad" />
             </button>
             <div className="dropdown-content">
               <Link to="Dashboard">
                 <i className="fas fa-user-cog" />
               </Link>
-              <Link to="#" onClick={() => setSession({})}>
+              <Link to="/" onClick={() => setSession({})}>
                 Log out
               </Link>
             </div>
@@ -37,7 +37,7 @@ const NavBar = () => {
               <i className="fas fa-user" />
             </button>
             <div className="dropdown-content">
-              <Link to="#" onClick={() => setSession({})}>
+              <Link to="/" onClick={() => setSession({})}>
                 Log out
               </Link>
             </div>
@@ -61,6 +61,7 @@ const NavBar = () => {
             </div>
             <div className="top-bar-right">
               <ul className="menu">
+                <li>{login()}</li>
                 <li>
                   <Link to="/">Inicio</Link>
                 </li>
@@ -73,7 +74,6 @@ const NavBar = () => {
                 <li>
                   <Link to="Nosotros">Nosotros</Link>
                 </li>
-                <li>{login()}</li>
               </ul>
             </div>
           </div>

@@ -163,7 +163,7 @@ const Dashboard = () => {
     <div className="dashboard-container">
       <div className="dashboard-canchas">
         <h1>Canchas</h1>
-        <button className="button primary" onClick={() => openModal('addCancha')}>Agregar Cancha</button>
+        <button className="button primary" id='btnAddCan' onClick={() => openModal('addCancha')}>Agregar Cancha</button>
         <table className="hover">
           <thead>
             <tr>
@@ -274,18 +274,19 @@ const Dashboard = () => {
         )}
         {modalType === 'addCancha' && (
           <>
-            <h2>Agregar Nueva Cancha</h2>
+            <h2 style={{fontSize: "30px", fontWeight: "bold"}}>Agregar Nueva Cancha</h2>
             <form onSubmit={handleAddCancha}>
-              <label>Nombre
+              <label style={{color: "white"}}>Nombre
                 <input
                   type="text"
                   name="tipo_cancha"
                   value={newCancha.tipo_cancha}
                   onChange={handleNewCanchaChange}
                   required
+
                 />
               </label>
-              <label>Descripción
+              <label style={{color: "white"}}>Descripción
                 <input
                   type="text"
                   name="descripcion"
@@ -295,7 +296,7 @@ const Dashboard = () => {
                 />
               </label>
               <button type="submit" className="button primary">Guardar</button>
-              <button type="button" className="button" onClick={closeModal}>Cancelar</button>
+              <button type="button" className="button alert" onClick={closeModal}>Cancelar</button>
             </form>
           </>
         )}
