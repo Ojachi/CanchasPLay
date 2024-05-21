@@ -50,7 +50,7 @@ const Carrousel = ({ images }) => {
           </section>
         ))}
       </div>
-      
+
       <div className="btn-left" onClick={moveToLeft}>
         <i className="bx bx-chevron-left"></i>
       </div>
@@ -67,28 +67,34 @@ const Carrousel = ({ images }) => {
 const Canchas = () => {
   return (
     <div className="contenedorCanchas">
-      <h1 className="textoCan_1">Futboll</h1>
-      <h3 className="textoCan">
-        ¡Siente la emoción del fútbol en nuestra cancha de calidad profesional!
-        Reserva tu espacio y disfruta de partidos llenos de acción en un entorno
-        espectacular.
-      </h3>
-      <Carrousel images={[futbol1, futbol2, futbol3]} />
-      <div style={{ margin: "10px 0" }}></div>
-      <h1 className="textoCan1_1">Voleibol</h1>
-      <h3 className="textoCan1">
-        Nuestra cancha de voleibol te espera para partidos emocionantes.
-        Experimenta la diversión y la competencia en un ambiente soleado y
-        amigable. ¡Reserva ahora!
-      </h3>
-      <Carrousel images={[voleibol1, voleibol2, voleibol3]} />
-      <div style={{ margin: "10px 0" }}></div>
-      <h1 className="textoCan2_1">Paintball</h1>
-      <h3 className="textoCan2">
-        Reúne a tu equipo, elabora estrategias y sumérgete en una batalla llena
-        de adrenalina. ¡Reserva tu experiencia hoy!
-      </h3>
-      <Carrousel images={[paintball1, paintball2, paintball3]} />
+      <div className="sectionContainer">
+        <h1 className="textoCan_1">Futboll</h1>
+        <h3 className="textoCan">
+          ¡Siente la emoción del fútbol en nuestra cancha de calidad
+          profesional! Reserva tu espacio y disfruta de partidos llenos de
+          acción en un entorno espectacular.
+        </h3>
+        <Carrousel images={[futbol1, futbol2, futbol3]} />
+      </div>
+
+      <div className="sectionContainer">
+        <h1 className="textoCan1_1">Voleibol</h1>
+        <h3 className="textoCan1">
+          Nuestra cancha de voleibol te espera para partidos emocionantes.
+          Experimenta la diversión y la competencia en un ambiente soleado y
+          amigable. ¡Reserva ahora!
+        </h3>
+        <Carrousel images={[voleibol1, voleibol2, voleibol3]} />
+      </div>
+
+      <div className="sectionContainer">
+        <h1 className="textoCan2_1">Paintball</h1>
+        <h3 className="textoCan2">
+          Reúne a tu equipo, elabora estrategias y sumérgete en una batalla
+          llena de adrenalina. ¡Reserva tu experiencia hoy!
+        </h3>
+        <Carrousel images={[paintball1, paintball2, paintball3]} />
+      </div>
     </div>
   );
 };

@@ -24,7 +24,7 @@
 }
 
 .topbar-sticky-shrink .menu a:hover {
-  color: #ffcc00;
+  color: #0062ff;
 }
 
 [data-sticky] {
@@ -385,6 +385,11 @@
   background-color: #cccccc;
 }
 
+.sectionContainer {
+  position: relative;
+  margin-bottom: 20px;
+}
+
 .reservarbutton {
   text-align: center;
   background: #0b67b8;
@@ -406,65 +411,31 @@
 
 .container-carousel1 {
   position: relative;
-  width: 100%; /* Cambiar a un porcentaje o tamaño deseado */
+  width: 100%;
   height: 600px;
   overflow: hidden;
   border-radius: 15px;
 }
 
-.textoCan {
-  position: absolute;
-  top: 20%;
-  left: 10%;
-  z-index: 1;
-  color: white;
-  width: 80%;
-  font-size: 24px;
-}
-
-.textoCan_1 {
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  z-index: 1;
-  color: rgb(206, 206, 69);
-  font-size: 48px;
-}
-
-.textoCan1 {
-  position: absolute;
-  top: 20%;
-  left: 10%;
-  z-index: 1;
-  color: white;
-  width: 80%;
-  font-size: 24px;
-}
-
-.textoCan1_1 {
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  z-index: 1;
-  color: rgb(206, 206, 69);
-  font-size: 48px;
-}
-
+.textoCan,
+.textoCan1,
 .textoCan2 {
   position: absolute;
   top: 20%;
   left: 10%;
-  z-index: 1;
+  z-index: 2;
   color: white;
   width: 80%;
   font-size: 24px;
 }
 
+.textoCan_1,
+.textoCan1_1,
 .textoCan2_1 {
   position: absolute;
   top: 10%;
   left: 10%;
-  z-index: 1;
+  z-index: 2;
   color: rgb(206, 206, 69);
   font-size: 48px;
 }
@@ -474,6 +445,25 @@
   height: 100%;
   filter: brightness(75%);
 }
+
+.btn-left,
+.btn-right {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  cursor: pointer;
+  font-size: 2rem;
+  color: white;
+}
+
+.btn-left {
+  left: 10px;
+}
+
+.btn-right {
+  right: 10px;
+}
+
 
 /* Reservas */
 .reservar-container {
