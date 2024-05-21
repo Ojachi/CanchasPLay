@@ -68,7 +68,7 @@ const Canchas = () => {
   return (
     <div className="contenedorCanchas">
       <div className="sectionContainer">
-        <h1 className="textoCan_1">Futboll</h1>
+        <h1 className="textoCan_1">Futbol</h1>
         <h3 className="textoCan">
           ¡Siente la emoción del fútbol en nuestra cancha de calidad
           profesional! Reserva tu espacio y disfruta de partidos llenos de
