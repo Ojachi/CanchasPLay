@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { SessionContext } from "../components/Session";
 import EditarReserva from '../components/EditarReserva';
 import {  useNavigate } from "react-router-dom";
+import { FaExclamationTriangle } from 'react-icons/fa';
 
 const customModalStyles = {
   content: {
@@ -133,6 +134,7 @@ const Dashboard = () => {
   if (!session || !session.esAdmin) {
     return (
       <div className="access-denied">
+        <FaExclamationTriangle className="icon" />
         <h1>Acceso Denegado</h1>
         <p>No tiene acceso a este lugar. Será redirigido a la página principal en 5 segundos.</p>
       </div>

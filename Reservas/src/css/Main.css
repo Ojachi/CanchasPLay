@@ -3,10 +3,12 @@
 .topbar-sticky-shrink {
   padding: 1rem;
   transition: padding 0.25s ease;
-  background: #2c3840;
+  background: #2c3840 !important;
+  width: 100%;
 }
 
 .topbar-sticky-shrink .menu {
+  background: #2c3840 !important;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,6 +19,8 @@
 }
 
 .topbar-sticky-shrink .menu a {
+  background: #2c3840 !important;
+  display: block;
   color: #ffffff;
   padding: 0 1rem;
   text-decoration: none;
@@ -182,7 +186,7 @@
 /* inicio */
 .container-carousel {
   position: relative;
-  width: 100%; /* Cambiar a un porcentaje o tamaño deseado */
+  width: 100%;
   height: 700px;
   background-color: #e0e0e0;
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.66);
@@ -241,7 +245,8 @@
 
 .marketing-site-three-up {
   text-align: center;
-  height: 600px;
+  padding-bottom: 100px; /* Agregar margen inferior para evitar superposición */
+  height: auto; /* Ajustar altura para contenido variable */
 }
 
 .marketing-site-three-up .rown {
@@ -323,17 +328,17 @@
 }
 
 .registration-form-container {
-  width: 80%; /* Ancho del contenedor del formulario */
-  max-width: 500px; /* Ancho máximo del contenedor del formulario */
-  background-color: #ffffff; /* Color de fondo del contenedor del formulario */
+  width: 80%;
+  max-width: 500px;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .form-title {
   text-align: center;
   margin-bottom: 20px;
-  color: #333333; /* Color del texto del título */
+  color: #333333;
 }
 .registerBtn {
   display: flex;
@@ -341,8 +346,8 @@
   margin-top: 20px;
 }
 .blue-button {
-  background-color: #007bff; /* Color de fondo azul */
-  color: #ffffff; /* Color del texto */
+  background-color: #007bff;
+  color: #ffffff;
   border: none;
   border-radius: 4px;
   padding: 10px 20px;
@@ -352,7 +357,7 @@
 }
 
 .blue-button:hover {
-  background-color: #0056b3; /* Color de fondo azul más oscuro al pasar el ratón */
+  background-color: #0056b3;
 }
 
 .password-input-container {
@@ -361,8 +366,8 @@
 
 .password-toggle {
   position: absolute;
-  right: 5px; /* Ajusta la posición del botón a la derecha */
-  top: 50%; /* Centra verticalmente el botón */
+  right: 5px;
+  top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
@@ -375,7 +380,7 @@
   display: flex;
   flex-wrap: wrap;
 }
-#yTC{ /* ya tienes cuenta */
+#yTC{
   padding-top: 10px;
 }
 
@@ -464,7 +469,6 @@
   right: 10px;
 }
 
-
 /* Reservas */
 .reservar-container {
   background-color: #e0e0e0;
@@ -497,6 +501,42 @@
   padding: 10px;
   border-radius: 5px;
 }
+
+.access-denied {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #f8f8f8;
+  color: #333;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.access-denied h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-family: 'Arial', sans-serif; /* Cambiar la fuente según tus preferencias */
+}
+
+.access-denied p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.access-denied .icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: #ff0000; /* Color rojo para el icono de advertencia */
+}
+
+/* Fondo con degradado */
+.access-denied {
+  background: linear-gradient(to bottom, #f8f8f8, #e0e0e0);
+}
+
 
 .translucent-form-overlay input::-webkit-input-placeholder {
   color: #aaaaaa;
@@ -767,5 +807,46 @@
 @media screen and (max-width: 39.9375em) {
   .testimonial-slider-container .testimonial-slide-author-container .testimonial-slide-author-info {
     margin-left: 1rem;
+  }
+}
+
+/* Ajustes de responsividad adicionales */
+@media (max-width: 768px) {
+  .topbar-sticky-shrink .menu {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .topbar-sticky-shrink .menu a {
+    padding: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .dashboard-canchas, .dashboard-reservas, .dashboard-usuarios {
+    width: 100%;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-container table, .dashboard-container th, .dashboard-container td {
+    display: block;
+    width: 100%;
+  }
+
+  .dashboard-container th {
+    background-color: transparent;
+    color: #000;
+  }
+
+  .form {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .marketing-site-three-up .rown {
+    grid-template-columns: 1fr;
   }
 }
