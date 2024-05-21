@@ -421,7 +421,7 @@
 .textoCan1,
 .textoCan2 {
   position: absolute;
-  top: 20%;
+  top: 40%;
   left: 10%;
   z-index: 2;
   color: white;
@@ -433,10 +433,10 @@
 .textoCan1_1,
 .textoCan2_1 {
   position: absolute;
-  top: 10%;
+  top: 25%;
   left: 10%;
   z-index: 2;
-  color: rgb(206, 206, 69);
+  color: rgb(255, 5, 5);
   font-size: 48px;
 }
 
@@ -491,8 +491,8 @@
 
 .translucent-form-overlay input,
 .translucent-form-overlay select {
-  color: #ffffff;
-  background-color: #444;
+  color: #000000;
+  background-color: #a6a6a6;
   border: 1px solid #555;
   padding: 10px;
   border-radius: 5px;
@@ -507,7 +507,7 @@
 }
 
 .translucent-form-overlay input::placeholder {
-  color: #aaaaaa;
+  color: #1a1919;
 }
 
 .reservas-list {

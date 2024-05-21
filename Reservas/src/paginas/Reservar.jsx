@@ -5,8 +5,6 @@ import Modal from "react-modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
-import CustomTimePicker from "../components/selectFecha";
-import CustomTimePicker2 from "../components/selectHoraFin";
 import EditarReserva from "../components/EditarReserva"; // Importar el componente EditarReserva
 
 const customModalStyles = {
@@ -30,9 +28,6 @@ const Reservar = () => {
   const { session } = useContext(SessionContext);
   const [selectedDate, setSelectedDate] = useState(null);
   const [time, setTime] = useState("none");
-  const [timeStart, setTimeStart] = useState("none");
-  const [Hora1Visible, setHora1Visible] = useState(false);
-  const [Hora2Visible, setHora2Visible] = useState(false);
   const [telefono, setTelefono] = useState("");
   const [deporte, setDeporte] = useState("any");
   const [modalVisible, setModalVisible] = useState(false);
@@ -77,20 +72,6 @@ const Reservar = () => {
     setTime(newTime);
   };
 
-  const handleHora = (e) => {
-    const value = e.target.value;
-    setTimeStart(value);
-    if (value === "1") {
-      setHora1Visible(true);
-      setHora2Visible(false);
-    } else if (value === "2") {
-      setHora1Visible(false);
-      setHora2Visible(true);
-    } else {
-      setHora1Visible(false);
-      setHora2Visible(false);
-    }
-  };
 
   const handleReservar = async (e) => {
     e.preventDefault();
@@ -113,7 +94,7 @@ const Reservar = () => {
             {
               telefono,
               fecha_hora: selectedDate,
-              duracion: 2,
+              duracion: time,
               cliente: session.id,
               cancha: deporte,
             }
@@ -212,6 +193,7 @@ const Reservar = () => {
                 <input
                   type="number"
                   name="telefono"
+                  placeholder="Numero"
                   value={telefono}
                   onChange={(e) => setTelefono(e.target.value)}
                   disabled={!session.id} // Deshabilitar si no ha iniciado sesión
@@ -258,7 +240,7 @@ const Reservar = () => {
                 className="columns1"
                 name="hora"
                 type="text"
-                onChange={handleHora}
+                onChange={(e) => handleChange(e.target.value)}
                 value={time}
                 disabled={!session.id} // Deshabilitar si no ha iniciado sesión
               >
@@ -266,17 +248,6 @@ const Reservar = () => {
                 <option value="1">1 hora</option>
                 <option value="2">2 horas</option>
               </select>
-              <div className="columns1">
-                {Hora1Visible && (
-                  <CustomTimePicker value={timeStart} onChange={handleChange} />
-                )}
-                {Hora2Visible && (
-                  <CustomTimePicker2
-                    value={timeStart}
-                    onChange={handleChange}
-                  />
-                )}
-              </div>
             </div>
             <button
               type="button"
