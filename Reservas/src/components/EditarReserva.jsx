@@ -86,6 +86,7 @@ const EditarReserva = ({ isOpen, onRequestClose, reserva, onSave, onResponse }) 
           <DatePicker
             selected={formValues.fecha_hora}
             onChange={(date) => setFormValues({ ...formValues, fecha_hora: date })}
+            placeholderText="Fecha"
             showTimeSelect
             timeFormat="HH:mm"
             timeIntervals={60}
